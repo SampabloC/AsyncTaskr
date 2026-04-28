@@ -1,24 +1,61 @@
-# README
+# AsyncTaskr ⚙️
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+AsyncTaskr es una API backend tipo mini SaaS para la gestión de tareas con procesamiento asíncrono.  
+Está construida con Ruby on Rails y enfocada en prácticas de backend moderno como diseño de APIs, jobs en segundo plano y preparación para despliegue en la nube.
 
-Things you may want to cover:
+---
 
-* Ruby version
+## 🚀 Objetivo del proyecto
 
-* System dependencies
+Este proyecto tiene como objetivo practicar y consolidar habilidades de backend moderno:
 
-* Configuration
+- Desarrollo de APIs con Ruby on Rails
+- Diseño de sistemas con procesamiento asíncrono
+- Manejo de colas de trabajos (jobs)
+- Contenerización con Docker
+- Preparación para despliegue en cloud (AWS)
 
-* Database creation
+---
 
-* Database initialization
+## 🧱 Stack tecnológico
 
-* How to run the test suite
+- Ruby on Rails (API mode)
+- PostgreSQL
+- Redis (futuro para jobs)
+- Sidekiq (futuro para background jobs)
+- Docker (en implementación)
+- Amazon Web Services (AWS) (objetivo de deploy)
 
-* Services (job queues, cache servers, search engines, etc.)
+---
 
-* Deployment instructions
+## 📦 Estado actual del proyecto
 
-* ...
+- [x] Inicialización del proyecto Rails
+- [x] Configuración base del repositorio
+- [ ] Autenticación de usuarios
+- [ ] CRUD de tareas
+- [ ] Sistema de estados de tareas (pending, processing, done)
+- [ ] Jobs en segundo plano
+- [ ] Dockerización del proyecto
+- [ ] Deploy en AWS
+
+---
+
+## 🏗️ Arquitectura (en progreso)
+
+El sistema está diseñado con una arquitectura backend modular:
+
+- API REST en Rails
+- Base de datos PostgreSQL
+- Workers para procesamiento asíncrono (pendiente)
+- Redis como broker de colas (pendiente)
+- Contenedores con Docker (pendiente)
+
+---
+
+## ⚙️ Instalación local
+
+```bash
+bundle install
+rails db:create db:migrate
+rails server
