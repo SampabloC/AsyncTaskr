@@ -32,8 +32,8 @@ Este proyecto tiene como objetivo practicar y consolidar habilidades de backend 
 
 - [x] Inicialización del proyecto Rails
 - [x] Configuración base del repositorio
-- [ ] Autenticación de usuarios
-- [ ] CRUD de tareas
+- [x] Autenticación de usuarios
+- [x] CRUD de tareas
 - [ ] Sistema de estados de tareas (pending, processing, done)
 - [ ] Jobs en segundo plano
 - [ ] Dockerización del proyecto
