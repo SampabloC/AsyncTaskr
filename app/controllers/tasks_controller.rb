@@ -3,11 +3,15 @@ class TasksController < ApplicationController
 
   def index
     tasks = current_user.tasks
-    render json: tasks
+    render json: {
+      data: tasks.map { |task| TaskSerializer.new(task).as_json }
+    }
   end
 
   def show
-    render json: @task
+    render json: {
+      data: TaskSerializer.new(@task).as_json
+    }
   end
 
   def create
@@ -15,22 +19,32 @@ class TasksController < ApplicationController
 
     if task.save
       ProcessTaskJob.perform_later(task.id)
-      render json: task, status: :created
+      render json: {
+        data: TaskSerializer.new(task).as_json
+      }, status: :created
     else
-      render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
+      render json: {
+        message: "Task could not be created.",
+        errors: task.errors.full_messages
+      }, status: :unprocessable_entity
     end
   end
 
   def update
     if @task.update(task_params)
-      render json: @task
+      render json: {
+        data: TaskSerializer.new(@task).as_json,
+        message: "Task was successfully updated."
+      }
     else
-      render json: { errors: @task.errors.full_messages }, status: :unprocessable_entity
+      render json: { 
+        message: "Task could not be updated.",
+        errors: @task.errors.full_messages
+      }, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @task = Task.find(params[:id])
     @task.destroy
     render json: { message: "Task was successfully destroyed." }
   end
