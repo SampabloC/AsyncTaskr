@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   before_action :authenticate_user!
 
   def current_user
-    return @current_user if defined?(@current_user)
+    return @current_user if instance_variable_defined?(:@current_user)
 
     payload = auth_payload
     return nil unless payload
@@ -11,7 +11,12 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate_user!
-    render json: { error: "Unauthorized" }, status: :unauthorized unless current_user
+    render json: {
+      error: {
+       ccode: "UNAUTHORIZED",
+       message: "Invalid or missing token"
+      }
+    }, status: :unauthorized unless current_user
   end
 
   private
@@ -24,6 +29,11 @@ class ApplicationController < ActionController::API
   end
 
   def auth_token
-    request.headers["Authorization"]&.split(" ")&.last
+    header = request.headers["Authorization"]
+    return nil unless header.present?
+
+    scheme, token = header.split(" ")
+
+    token if scheme == "Bearer"
   end
 end

@@ -7,8 +7,10 @@ class JsonWebToken
   end
 
   def self.decode(token)
-    decoded = JWT.decode(token, SECRET_KEY, true, algorithm: "HS256")
-    decoded[0]
+    decoded = JWT.decode(token, SECRET_KEY, true, algorithm: "HS256")[0]
+
+    return nil if decoded["exp"].to_i < Time.now.to_i
+    decoded
   rescue JWT::DecodeError, JWT::ExpiredSignature
     nil
   end
