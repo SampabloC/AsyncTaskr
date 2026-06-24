@@ -34,8 +34,8 @@ Este proyecto tiene como objetivo practicar y consolidar habilidades de backend 
 - [x] Configuración base del repositorio
 - [x] Autenticación de usuarios
 - [x] CRUD de tareas
-- [ ] Sistema de estados de tareas (pending, processing, done)
-- [ ] Jobs en segundo plano
+- [x] Sistema de estados de tareas (pending, processing, done)
+- [x] Jobs en segundo plano
 - [ ] Dockerización del proyecto
 - [ ] Deploy en AWS
 
