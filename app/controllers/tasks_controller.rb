@@ -37,7 +37,7 @@ class TasksController < ApplicationController
         message: "Task was successfully updated."
       }
     else
-      render json: { 
+      render json: {
         message: "Task could not be updated.",
         errors: @task.errors.full_messages
       }, status: :unprocessable_entity
