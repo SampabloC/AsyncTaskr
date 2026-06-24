@@ -4,11 +4,10 @@ class ApplicationController < ActionController::API
   def current_user
     return @current_user if defined?(@current_user)
 
-    token = request.headers["Authorization"]&.split(" ")&.last
-    return nil unless token
+    payload = auth_payload
+    return nil unless payload
 
-    user_id = decode_token(token)
-    @current_user = User.find_by(id: user_id)
+    @current_user = User.find_by(id: payload["user_id"])
   end
 
   def authenticate_user!
@@ -17,12 +16,14 @@ class ApplicationController < ActionController::API
 
   private
 
-  def decode_token(token)
-    begin
-      decoded = JWT.decode(token, Rails.application.secret_key_base)[0]
-      decoded["user_id"]
-    rescue JWT::DecodeError
-      nil
-    end
+  def auth_payload
+    token = auth_token
+    return nil unless token
+
+    JsonWebToken.decode(token)
+  end
+
+  def auth_token
+    request.headers["Authorization"]&.split(" ")&.last
   end
 end
