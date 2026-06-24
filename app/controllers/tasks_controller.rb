@@ -14,6 +14,7 @@ class TasksController < ApplicationController
     task = current_user.tasks.build(task_params)
 
     if task.save
+      ProcessTaskJob.perform_later(task.id)
       render json: task, status: :created
     else
       render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
