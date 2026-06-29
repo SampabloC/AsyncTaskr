@@ -1,0 +1,70 @@
+name: async_taskr
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: async_taskr
+    restart: unless-stopped
+    command: sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0"
+    env_file:
+      - .env
+    environment:
+      TZ: America/Mexico_City
+      DEBIAN_FRONTEND: noninteractive
+    networks:
+      - net
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    logging: *default-logging
+
+  postgresql:
+    container_name: postgresql_taskr
+    image: postgres:15.18-trixie #dhi.io/postgres:18-alpine3.23-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${PSQL_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${PSQL_USER} -d ${PSQL_DB}'"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    logging: *default-logging
+    networks:
+      - net
+
+  redis:
+    container_name: redis_taskr
+    image: redis:trixie #dhi.io/redis:8-debian-dev
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    logging: *default-logging
+    networks:
+      - net
+
+networks:
+  net:
+volumes:
+  postgres_data:
+  redis_data:
+    driver: local
+  bundle_cache:
+  vendor_ruby:
