@@ -4,8 +4,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/rails
-      - bundle_cache:/home/app/.bundle/
-      - vendor_ruby:/home/app/vendor/ruby
+      - bundle_cache:/usr/local/.bundle/
     stdin_open: true
     tty: true
     environment:
@@ -16,3 +15,9 @@ services:
   redis:
     ports:
       - "6379:6379"
+  sidekiq:
+    volumes:
+      - .:/rails
+      - bundle_cache:/usr/local/.bundle/
+    environment:
+      RAILS_ENV: development

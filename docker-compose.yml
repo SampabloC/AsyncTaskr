@@ -62,8 +62,22 @@ services:
       
   sidekiq:
     container_name: sidekiq_taskr
-    image: 
-
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: bundle exec sidekiq
+    networks:
+      - net
+    environment:
+      REDIS_URL: ${REDIS_URL}
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file: .env
+    logging: *default-logging
+ 
 networks:
   net:
 volumes:
