@@ -6,7 +6,7 @@ class ProcessTaskJob < ApplicationJob
     task.in_progress!
 
     sleep(5)
-    # raise StandardError, "Simulated error for task #{task_id}" if task.title.include?("fail")
+    raise StandardError, "Simulated error for task #{task_id}" if task.title.include?("fail")
     task.completed!
   rescue StandardError => e
     task.failed!
