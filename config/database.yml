@@ -85,8 +85,6 @@ production:
   primary: &primary_production
     <<: *default
     database: task_api_production
-    username: task_api
-    password: <%= ENV["TASK_API_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: task_api_production_cache

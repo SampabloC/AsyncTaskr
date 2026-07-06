@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile
