@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
   def authenticate_user!
     render json: {
       error: {
-       ccode: "UNAUTHORIZED",
+       code: "UNAUTHORIZED",
        message: "Invalid or missing token"
       }
     }, status: :unauthorized unless current_user
