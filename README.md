@@ -36,12 +36,12 @@ Este proyecto tiene como objetivo practicar y consolidar habilidades de backend 
 - [x] CRUD de tareas
 - [x] Sistema de estados de tareas (pending, processing, done)
 - [x] Jobs en segundo plano
-- [ ] Dockerización del proyecto
-- [ ] Deploy en AWS
+- [x] Dockerización del proyecto
+- [x] Deploy en AWS
 
 ---
 
-## 🏗️ Arquitectura (en progreso)
+## 🏗️ Arquitectura
 
 El sistema está diseñado con una arquitectura backend modular:
 
@@ -59,3 +59,11 @@ El sistema está diseñado con una arquitectura backend modular:
 bundle install
 rails db:create db:migrate
 rails server
+```
+
+```bash
+docker-compose build
+docker-compose up -d
+docker exec -it <container_name> bash
+bin/rails db:migrate
+```
