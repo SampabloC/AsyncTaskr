@@ -1,0 +1,25 @@
+services:
+  app:
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${APP_IMAGE}:${VERSION}
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - .env.production
+    restart: unless-stopped
+
+  sidekiq:
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${APP_IMAGE}:${VERSION}
+    command: bundle exec sidekiq
+    env_file:
+      - .env.production
+    restart: unless-stopped
+
+  redis:
+    image: redis:trixie
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15.18-trixie
+    env_file:
+      - .env.production
+    restart: unless-stopped
