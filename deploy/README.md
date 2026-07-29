@@ -5,7 +5,7 @@
 This document describes the steps to deploy the Task API application to an AWS EC2 instance.
 
 ## Diagram
-
+```
 Internet
     │
     ▼
@@ -18,7 +18,7 @@ Rails Container
     └── Redis
           │
       Sidekiq
-
+```
 ## Prerequisites
 
 - An AWS account with EC2 access
